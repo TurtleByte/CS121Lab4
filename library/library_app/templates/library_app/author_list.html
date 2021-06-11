@@ -1,0 +1,41 @@
+{% extends "library_app/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>ID</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Country of Origin</td>
+            <td>
+                <button onclick="location.href='{% url 'author_insert' %}'" class="btn btn-outline-success">Add Author</button>
+                <button onclick="location.href='{% url 'book_list' %}'" class="btn btn-secondary">Book List</button>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for author in author_list %}
+            <tr>
+                <td>{{author.id}}</td>
+                <td>{{author.FirstName}}</td>
+                <td>{{author.LastName}}</td>
+                <td>{{author.CountryOfOrigin}}</td>
+                <td>
+                    <a href="{% url 'author_update' author.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'author_delete' author.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

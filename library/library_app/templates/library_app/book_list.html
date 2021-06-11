@@ -1,0 +1,47 @@
+{% extends "library_app/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>ID</td>
+            <td>Book Title</td>
+            <td>Author</td>
+            <td>Category</td>
+            <td>Price</td>
+            <td>Number of Pages</td>
+            <td>Language</td>
+            <td>
+                <button onclick="location.href='{% url 'book_insert' %}'" class="btn btn-outline-success">Add Book</button>
+                <button onclick="location.href='{% url 'author_list' %}'" class="btn btn-secondary">Author List</button>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in book_list %}
+            <tr>
+                <td>{{book.id}}</td>
+                <td>{{book.BookTitle}}</td>
+                <td>{{book.Author}}</td>
+                <td>{{book.Category}}</td>
+                <td>{{book.Price}}</td>
+                <td>{{book.NumberOfPages}}</td>
+                <td>{{book.Language}}</td>
+                <td>
+                    <a href="{% url 'book_update' book.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'book_delete' book.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
